@@ -1,0 +1,223 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Restful 2024 National Exam",
+    "description": ""
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authentication/Authorization Endpoints."
+    },
+    {
+      "name": "Books",
+      "description": "Books Endpoints."
+    }
+  ],
+  "paths": {
+    "/users/signup": {
+      "post": {
+        "tags": ["Auth"],
+        "description": "Sign up",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignupDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Auth"],
+        "description": "Log in",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books/new": {
+      "post": {
+        "tags": ["Books"],
+        "description": "Add a book",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterBook"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/books/all": {
+      "get": {
+        "tags": ["Books"],
+        "description": "Get all books",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "gutsinda@nesa.gov.rw"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          }
+        },
+        "required": ["email", "password"]
+      },
+      "SignupDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "Mugabo"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Javis"
+          },
+          "email": {
+            "type": "string",
+            "example": "gutsinda@nesa.gov.rw"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          }
+        },
+        "required": ["firstName", "lastName", "email", "password"]
+      },
+      "RegisterBook": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Node.js Guide"
+          },
+          "author": {
+            "type": "string",
+            "example": "MURANGWA Pacifique"
+          },
+          "publisher": {
+            "type": "string",
+            "example": "Coding Monsters"
+          },
+          "publicationYear": {
+            "type": "integer",
+            "example": 1999
+          },
+          "subject": {
+            "type": "string",
+            "example": "JavaScript"
+          },
+          "count": {
+            "type": "integer",
+            "example": 10
+          }
+        },
+        "required": [
+          "name",
+          "author",
+          "publisher",
+          "publicationYear",
+          "subject",
+          "count"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  }
+}
